@@ -1,0 +1,29 @@
+js:
+  - 'jshint'
+  - 'concat'
+  - 'uglify'
+
+css:
+  - 'sass'
+  - 'postcss'
+
+image:
+  - 'newer:imagemin'
+
+content:
+  - 'copy'
+
+build:
+  - 'clean'
+  - 'js'
+  - 'css'
+  - 'grunticon'
+  - 'image'
+  - 'content'
+
+dev:
+  - 'connect'
+  - 'watch'
+
+default:
+  - 'dev'

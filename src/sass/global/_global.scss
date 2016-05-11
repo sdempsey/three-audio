@@ -1,0 +1,158 @@
+@import '../../../node_modules/normalize.scss/normalize';
+@import 'mixins';
+
+
+//  /*
+//     ========================================
+//         ::Colors
+//     ========================================
+//  */
+
+$white: #fff;
+$black: #2c313b;
+$white: #fff;
+$blue: #00aaec;
+
+//scss-lint:disable ColorVariable
+$colors: (
+    body-bg: $white,
+    body-copy: $black,
+    selection-color: $white,
+    selection-bg: $blue,
+    a-color: $blue
+);
+
+@function color($key) {
+    @if map-has-key($colors, $key) {
+        @return map-get($colors, $key);
+    }
+
+    @warn unquote('"Unknown "#{$key}" in $colors."');
+    @return null;
+}
+
+
+//  /*
+//     ========================================
+//         ::Breakpoint Variables and Mixin
+//     ========================================
+//  */
+
+
+
+$small: em(600px);      // 37.5em
+$medium: em(760px);     // 47.5em
+$large: em(1000px);     // 62.5em
+
+$breakpoints: (
+    small: $small,
+    medium: $medium,
+    large: $large,
+);
+
+// new respond-to mixin! Takes either a map value or a unit value
+// @include respond-to(small) & @include respond-to(599px, max)
+// are both valid
+
+@mixin respond-to($breakpoint, $minmax:'min') {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media screen and (#{$minmax}-width: #{map-get($breakpoints, $breakpoint)}) {
+            @content;
+        }
+    } @else {
+        @media screen and (#{$minmax}-width: em($breakpoint)) {
+            @content;
+        }
+    }
+}
+
+// respond-between: for those times when you have some weird element
+// that just happens to break between two odd breakpoints
+
+@mixin respond-between($min, $max) {
+    @media screen and (min-width: em($min)) and (max-width: em($max)) {
+        @content;
+    }
+}
+
+//  /*
+//     ========================================
+//         ::Z Index Map and Function
+//     ========================================
+//  */
+
+$z-index: (
+    header: 1,
+    botomless-pit: -99999,
+    mount-everest: 99999
+);
+
+@function z($key) {
+    @if map-has-key($z-index, $key) {
+        @return map-get($z-index, $key);
+    }
+
+    @warn unquote('"Unkown "#{$key}" in $z-index."');
+    @return null;
+}
+
+
+$base-stack: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$fonts: (
+    base: $base-stack
+);
+
+@function family($key) {
+    @if map-has-key($fonts, $key) {
+        @return map-get($fonts, $key);
+    }
+
+    @warn unquote('"Unkown "#{$key}" in $fonts."');
+    @return null;
+}
+
+//  /*
+//     ========================================
+//         ::Font Weights
+//     ========================================
+//  */
+
+$weights: (
+    extralight: 100,
+    light: 300,
+    normal: 400,
+    medium: 500,
+    bold: 700,
+    extrabold: 900
+);
+
+@function fw($key) {
+    @if map-has-key($weights, $key) {
+        @return map-get($weights, $key);
+    }
+
+    @warn unquote('"Unkown "#{$key}" in $weights."');
+    @return null;
+}
+
+
+//  /*
+//     ========================================
+//         ::Global Styles
+//     ========================================
+//  */
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.screen-reader-text {
+    @include screen-reader-text;
+}
