@@ -1,8 +1,10 @@
 (function(){
 	'use strict';
 
+    var ctx;
+
 	function onDocumentReady(){
-		console.log('Hello, world!');
+	    ctx = new window.AudioContext();
 	}
 
 	document.addEventListener('DOMContentLoaded', onDocumentReady);
